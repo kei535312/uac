@@ -26,24 +26,29 @@ body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);co
 #err.show{opacity:1}
 
 /* Main Content */
-#mainContent{display:none}
-.nav-header{text-align:center;padding:60px 24px 40px;background:linear-gradient(180deg,rgba(108,92,231,0.08) 0%,transparent 100%)}
-.nav-logo{font-size:48px;font-weight:900;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-sub{font-size:13px;color:var(--text2);letter-spacing:4px;margin-top:4px}
-.nav-desc{font-size:16px;color:var(--text2);margin-top:16px;max-width:500px;margin-left:auto;margin-right:auto}
+#mainContent{display:none;height:100vh;flex-direction:column}
+#mainContent.show{display:flex}
+.nav-header{text-align:center;padding:32px 24px 24px}
+.nav-logo{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-sub{font-size:11px;color:var(--text2);letter-spacing:4px;margin-top:2px}
 
-.card-grid{max-width:700px;margin:48px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px 24px;text-align:center;text-decoration:none;color:var(--text);transition:transform 0.2s,border-color 0.3s,box-shadow 0.3s;cursor:pointer;display:block}
-.card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 32px rgba(108,92,231,0.15)}
-.card .icon{font-size:40px;margin-bottom:12px}
-.card .title{font-size:18px;font-weight:700;margin-bottom:8px}
-.card .desc{font-size:13px;color:var(--text2);line-height:1.6}
+.card-grid{flex:1;display:flex}
+.card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;color:var(--text);transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.card:first-child{background:linear-gradient(135deg,#12122a,#1a1a3a);border-right:1px solid var(--border)}
+.card:last-child{background:linear-gradient(135deg,#1a1a3a,#12122a)}
+.card:hover{background:linear-gradient(135deg,rgba(108,92,231,0.15),rgba(108,92,231,0.05))}
+.card .icon{font-size:72px;margin-bottom:20px}
+.card .title{font-size:26px;font-weight:900;margin-bottom:12px}
+.card .desc{font-size:14px;color:var(--text2);line-height:1.8;text-align:center;max-width:250px}
 
-.footer{text-align:center;padding:48px 24px;font-size:12px;color:var(--text2);opacity:0.4}
+.footer{text-align:center;padding:16px 24px;font-size:11px;color:var(--text2);opacity:0.3;border-top:1px solid var(--border)}
 
 @media(max-width:600px){
-  .card-grid{grid-template-columns:1fr}
+  .card-grid{flex-direction:column}
+  .card:first-child{border-right:none;border-bottom:1px solid var(--border)}
   .lock-logo{font-size:48px}
+  .card .icon{font-size:48px}
+  .card .title{font-size:20px}
 }
 </style>
 </head>
@@ -92,7 +97,7 @@ function ck(p){if(p.length!==S.length)return false;for(var i=0;i<S.length;i++){i
 document.getElementById("lockForm").addEventListener("submit",function(e){
   e.preventDefault();
   var p=document.getElementById("pw").value;
-  if(ck(p)){document.getElementById("lockScreen").style.display="none";document.getElementById("mainContent").style.display="block"}
+  if(ck(p)){document.getElementById("lockScreen").style.display="none";document.getElementById("mainContent").style.display="flex"}
   else{document.getElementById("err").classList.add("show");document.getElementById("pw").value="";document.getElementById("pw").focus()}
 });
 </script>
