@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS - 5段階グロース戦略</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0a0a1a; --surface: #12122a; --surface2: #1a1a3a;
+  --accent: #6c5ce7; --accent2: #a29bfe; --gold: #f0b429;
+  --btc: #f7931a; --green: #00e676; --red: #ff5252;
+  --text: #e8e8f0; --text2: #9090b0; --border: #2a2a4a;
+  --blue: #4fc3f7; --purple: #ce93d8; --orange: #ffb74d;
+}
+body {
+  font-family: 'Noto Sans JP', -apple-system, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.7;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center; padding: 60px 24px 40px;
+  background: linear-gradient(180deg, rgba(108,92,231,0.08) 0%, transparent 100%);
+}
+.header .logo { font-size: 48px; font-weight: 900; background: linear-gradient(135deg, var(--accent2), var(--btc)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.header h1 { font-size: 28px; font-weight: 700; margin: 12px 0 8px; }
+.header p { font-size: 15px; color: var(--text2); max-width: 600px; margin: 0 auto; }
+
+.content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+/* ===== OVERVIEW STAIRCASE ===== */
+.staircase {
+  display: flex; gap: 6px; margin: 48px 0 60px; align-items: flex-end; height: 280px;
+}
+.stair {
+  flex: 1; border-radius: 12px 12px 0 0; display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 16px 10px; text-align: center;
+  position: relative; cursor: default; transition: transform 0.2s;
+}
+.stair:hover { transform: translateY(-4px); }
+.stair .step-num { font-size: 11px; letter-spacing: 2px; opacity: 0.7; margin-bottom: 4px; }
+.stair .step-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.stair .step-rev { font-size: 11px; opacity: 0.8; }
+.s1 { height: 30%; background: linear-gradient(180deg, #2d2d5a, #1a1a3a); border: 1px solid var(--border); }
+.s2 { height: 45%; background: linear-gradient(180deg, #2d3a5a, #1a2a3a); border: 1px solid #2a3a5a; }
+.s3 { height: 60%; background: linear-gradient(180deg, #3a2d5a, #2a1a3a); border: 1px solid #3a2a5a; }
+.s4 { height: 78%; background: linear-gradient(180deg, #4a3a2a, #2a2a1a); border: 1px solid var(--btc); }
+.s5 { height: 100%; background: linear-gradient(180deg, rgba(108,92,231,0.3), rgba(247,147,26,0.2)); border: 1px solid var(--gold); }
+
+/* ===== STAGE SECTIONS ===== */
+.stage {
+  margin-bottom: 48px; padding: 36px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 20px;
+  position: relative; overflow: hidden;
+}
+.stage::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+}
+.stage.st1::before { background: var(--text2); }
+.stage.st2::before { background: var(--blue); }
+.stage.st3::before { background: var(--purple); }
+.stage.st4::before { background: var(--btc); }
+.stage.st5::before { background: var(--gold); }
+
+.stage-header {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.stage-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700;
+}
+.st1 .stage-badge { background: rgba(144,144,176,0.2); color: var(--text2); }
+.st2 .stage-badge { background: rgba(79,195,247,0.2); color: var(--blue); }
+.st3 .stage-badge { background: rgba(206,147,216,0.2); color: var(--purple); }
+.st4 .stage-badge { background: rgba(247,147,26,0.2); color: var(--btc); }
+.st5 .stage-badge { background: rgba(240,180,41,0.2); color: var(--gold); }
+
+.stage-title { font-size: 22px; font-weight: 900; }
+.stage-period { font-size: 13px; color: var(--text2); margin-left: auto; }
+
+/* ===== DETAIL GRID ===== */
+.detail-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;
+}
+.detail-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px;
+}
+.detail-card h4 {
+  font-size: 12px; color: var(--accent2); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.detail-card ul {
+  list-style: none; font-size: 13px; color: var(--text2);
+}
+.detail-card ul li {
+  padding: 4px 0; padding-left: 16px; position: relative;
+}
+.detail-card ul li::before {
+  content: '▸'; position: absolute; left: 0; color: var(--accent2);
+}
+
+/* ===== METRICS ROW ===== */
+.metrics-row {
+  display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;
+}
+.metric-box {
+  flex: 1; min-width: 100px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; text-align: center;
+}
+.metric-box .val { font-size: 22px; font-weight: 900; }
+.metric-box .val.green { color: var(--green); }
+.metric-box .val.gold { color: var(--gold); }
+.metric-box .val.btc { color: var(--btc); }
+.metric-box .val.accent { color: var(--accent2); }
+.metric-box .lbl { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+/* ===== UNLOCK BANNER ===== */
+.unlock {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px; margin-top: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.unlock .arrow { font-size: 20px; color: var(--green); }
+.unlock .text { font-size: 13px; color: var(--text2); }
+.unlock .text strong { color: var(--text); }
+
+/* ===== TRANSITION ===== */
+.transition {
+  text-align: center; padding: 32px 0; position: relative;
+}
+.transition::before {
+  content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(to bottom, var(--border), var(--accent), var(--border));
+}
+.transition .icon {
+  position: relative; z-index: 1; font-size: 28px;
+  background: var(--bg); padding: 8px;
+}
+.transition .condition {
+  position: relative; z-index: 1; font-size: 12px; color: var(--accent2);
+  background: var(--bg); padding: 4px 12px; display: inline-block;
+  margin-top: 4px;
+}
+
+/* ===== LEGAL SECTION ===== */
+.legal-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin: 32px 0;
+}
+.legal-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+}
+.legal-card .icon { font-size: 24px; margin-bottom: 8px; }
+.legal-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.legal-card p { font-size: 12px; color: var(--text2); line-height: 1.6; }
+.legal-card .stage-tag {
+  display: inline-block; margin-top: 8px; padding: 2px 8px;
+  border-radius: 10px; font-size: 10px; font-weight: 700;
+}
+.legal-card .stage-tag.s3 { background: rgba(206,147,216,0.2); color: var(--purple); }
+.legal-card .stage-tag.s4 { background: rgba(247,147,26,0.2); color: var(--btc); }
+.legal-card .stage-tag.s5 { background: rgba(240,180,41,0.2); color: var(--gold); }
+
+/* ===== SUMMARY TABLE ===== */
+.summary-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  margin: 32px 0; font-size: 13px;
+}
+.summary-table thead th {
+  background: var(--surface2); padding: 12px 14px; font-size: 11px;
+  font-weight: 600; color: var(--accent2); text-align: center;
+  border-bottom: 1px solid var(--border); letter-spacing: 1px;
+}
+.summary-table thead th:first-child { text-align: left; border-radius: 12px 0 0 0; }
+.summary-table thead th:last-child { border-radius: 0 12px 0 0; }
+.summary-table tbody td {
+  padding: 14px; border-bottom: 1px solid var(--border); text-align: center;
+}
+.summary-table tbody td:first-child { text-align: left; font-weight: 600; }
+.summary-table tbody tr:last-child td { border-bottom: none; }
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center; padding: 60px 24px 40px;
+}
+.footer .msg {
+  font-size: 20px; font-weight: 700; margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--accent2), var(--btc));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.footer .sub { font-size: 13px; color: var(--text2); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .staircase { height: 200px; gap: 4px; }
+  .stair .step-title { font-size: 11px; }
+  .detail-grid, .legal-grid { grid-template-columns: 1fr; }
+  .metrics-row { flex-direction: column; }
+  .stage-period { margin-left: 0; width: 100%; }
+  .header h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">NEXUS</div>
+  <h1>5段階グロース戦略</h1>
+  <p>個人の日常動作データ販売からスタートし、段階的に専門職データ企業へスケールアップ</p>
+</div>
+
+<div class="content">
+
+<!-- STAIRCASE OVERVIEW -->
+<div class="staircase">
+  <div class="stair s1">
+    <div class="step-num">STAGE 1</div>
+    <div class="step-title">個人で稼ぐ</div>
+    <div class="step-rev">月$0〜100</div>
+  </div>
+  <div class="stair s2">
+    <div class="step-num">STAGE 2</div>
+    <div class="step-title">仲間を集める</div>
+    <div class="step-rev">月$500〜2K</div>
+  </div>
+  <div class="stair s3">
+    <div class="step-num">STAGE 3</div>
+    <div class="step-title">自前プラットフォーム</div>
+    <div class="step-rev">月$5K〜20K</div>
+  </div>
+  <div class="stair s4">
+    <div class="step-num">STAGE 4</div>
+    <div class="step-title">専門職データ参入</div>
+    <div class="step-rev">月$50K〜200K</div>
+  </div>
+  <div class="stair s5">
+    <div class="step-num">STAGE 5</div>
+    <div class="step-title">医療・企業提携</div>
+    <div class="step-rev">月$500K+</div>
+  </div>
+</div>
+
+<!-- ========== STAGE 1 ========== -->
+<div class="stage st1">
+  <div class="stage-header">
+    <span class="stage-badge">STAGE 1</span>
+    <span class="stage-title">個人で日常動作を売って稼ぐ</span>
+    <span class="stage-period">0〜3ヶ月目</span>
+  </div>
+
+  <p style="font-size: 14px; color: var(--text2); margin-bottom: 16px;">
+    費用ゼロ。iPhoneと既存プラットフォームだけで「データが売れるか」を検証する。
+  </p>
+
+  <div class="detail-grid">
+    <div class="detail-card">
+      <h4>やること</h4>
+      <ul>
+        <li>ZenO ベータ版に登録</li>
+        <li>Versos.ai に登録</li>
+        <li>CrowdGen (Appen) に登録</li>
+        <li>日常動作を撮影（料理・掃除・洗濯）</li>
+        <li>各プラットフォームにアップロード</li>
+        <li>どのカテゴリが売れるか分析</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>撮影する動画</h4>
+      <ul>
+        <li>料理（切る・炒める・盛り付け）</li>
+        <li>掃除（掃除機・拭き掃除）</li>
+        <li>洗濯物をたたむ・干す</li>
+        <li>食器洗い</li>
+        <li>片付け・整理整頓</li>
+        <li>ドアの開閉・階段の昇降</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-box"><div class="val">¥0</div><div class="lbl">初期費用</div></div>
+    <div class="metric-box"><div class="val">1人</div><div class="lbl">必要人数</div></div>
+    <div class="metric-box"><div class="val accent">$50〜100</div><div class="lbl">月間目標収益</div></div>
+    <div class="metric-box"><div class="val">3ヶ月</div><div class="lbl">検証期間</div></div>
+  </div>
+
+  <div class="unlock">
+    <span class="arrow">→</span>
+    <span class="text"><strong>Stage 2への条件:</strong> 月$50以上の収益を安定して出せるようになったら</span>
+  </div>
+</div>
+
+<!-- TRANSITION -->
+<div class="transition">
+  <div class="icon">⬇</div>
+  <div class="condition">月$50+達成で次へ</div>
+</div>
+
+<!-- ========== STAGE 2 ========== -->
+<div class="stage st2">
+  <div class="stage-header">
+    <span class="stage-badge">STAGE 2</span>
+    <span class="stage-title">仲間を集めてデータ量を増やす</span>
+    <span class="stage-period">3〜6ヶ月目</span>
+  </div>
+
+  <p style="font-size: 14px; color: var(--text2); margin-bottom: 16px;">
+    友人・知人・SNSで5〜20人のコントリビューターを集めてデータ収集を拡大。<br>
+    あなたが「仲介者」として取りまとめ、まだ既存プラットフォーム上で販売。
+  </p>
+
+  <div class="detail-grid">
+    <div class="detail-card">
+      <h4>やること</h4>
+      <ul>
+        <li>Stage 1で売れたカテゴリに集中</li>
+        <li>友人・知人に撮影を依頼（報酬分配）</li>
+        <li>Twitter/Instagram で協力者を募集</li>
+        <li>撮影マニュアルを作成</li>
+        <li>品質チェックの基準を決める</li>
+        <li>簡易的な報酬分配の仕組みを作る</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>拡大するカテゴリ</h4>
+      <ul>
+        <li>Stage 1で反応が良かったカテゴリ</li>
+        <li>複数人の生活シーン（多様性UP）</li>
+        <li>異なる住環境（アパート・一戸建て等）</li>
+        <li>異なる年齢層の動作データ</li>
+        <li>ペットとのインタラクション</li>
+        <li>DIY・簡単な修理作業</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-box"><div class="val">¥0</div><div class="lbl">初期費用</div></div>
+    <div class="metric-box"><div class="val">5〜20人</div><div class="lbl">コントリビューター</div></div>
+    <div class="metric-box"><div class="val green">$500〜2K</div><div class="lbl">月間収益</div></div>
+    <div class="metric-box"><div class="val">70/30</div><div class="lbl">撮影者/あなた</div></div>
+  </div>
+
+  <div class="unlock">
+    <span class="arrow">→</span>
+    <span class="text"><strong>Stage 3への条件:</strong> 月$1,000+の収益 & コントリビューター10人以上</span>
+  </div>
+</div>
+
+<!-- TRANSITION -->
+<div class="transition">
+  <div class="icon">⬇</div>
+  <div class="condition">月$1K+ & 10人以上で次へ</div>
+</div>
+
+<!-- ========== STAGE 3 ========== -->
+<div class="stage st3">
+  <div class="stage-header">
+    <span class="stage-badge">STAGE 3</span>
+    <span class="stage-title">自前プラットフォームを構築</span>
+    <span class="stage-period">6〜12ヶ月目</span>
+  </div>
+
+  <p style="font-size: 14px; color: var(--text2); margin-bottom: 16px;">
+    既存プラットフォームの手数料を払う側から、自分が手数料を取る側になる。<br>
+    MVPのWebアプリを開発し、AI企業と直接取引を開始。
+  </p>
+
+  <div class="detail-grid">
+    <div class="detail-card">
+      <h4>構築するもの</h4>
+      <ul>
+        <li>Webアプリ（データアップロード・管理）</li>
+        <li>品質検証AIの初期版</li>
+        <li>自動匿名化処理（顔ぼかし等）</li>
+        <li>BTC/Lightning Network 決済</li>
+        <li>データカタログ（AI企業向け閲覧ページ）</li>
+        <li>利用規約・プライバシーポリシー</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>営業活動</h4>
+      <ul>
+        <li>AI企業にコールドメール（Stage 1-2の実績付き）</li>
+        <li>「こんなデータがあります」のサンプル提供</li>
+        <li>ロボティクス系スタートアップにDM</li>
+        <li>AI/データ系カンファレンスに参加</li>
+        <li>少額でも最初の法人契約を取る</li>
+        <li>日本の強み（職人文化）をアピール</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-grid" style="margin-top: 16px;">
+    <div class="detail-card">
+      <h4>技術スタック（最小構成）</h4>
+      <ul>
+        <li>フロント: Next.js（Vercel無料枠）</li>
+        <li>DB: Supabase（無料枠）</li>
+        <li>ストレージ: Cloudflare R2（安い）</li>
+        <li>決済: BTCPay Server（OSS・無料）</li>
+        <li>認証: Supabase Auth</li>
+        <li>合計コスト: 月$50〜200程度</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>法人設立</h4>
+      <ul>
+        <li>合同会社設立（費用: 約¥60,000）</li>
+        <li>暗号資産関連は「交換業」に該当しない<br>範囲で設計（BTCの送金のみ）</li>
+        <li>個人情報保護法に準拠した規約作成</li>
+        <li>顧問弁護士（スポット相談: ¥5万/回）</li>
+        <li>税理士（暗号資産の税務処理）</li>
+        <li>会計ソフト（freee等）導入</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-box"><div class="val btc">¥30〜50万</div><div class="lbl">初期投資</div></div>
+    <div class="metric-box"><div class="val">50〜100人</div><div class="lbl">コントリビューター</div></div>
+    <div class="metric-box"><div class="val green">$5K〜20K</div><div class="lbl">月間収益</div></div>
+    <div class="metric-box"><div class="val">20%</div><div class="lbl">プラットフォーム手数料</div></div>
+  </div>
+
+  <div class="unlock">
+    <span class="arrow">→</span>
+    <span class="text"><strong>Stage 4への条件:</strong> 法人契約2社以上 & 月$10,000+の収益</span>
+  </div>
+</div>
+
+<!-- TRANSITION -->
+<div class="transition">
+  <div class="icon">⬇</div>
+  <div class="condition">法人契約2社+ & 月$10K+で次へ</div>
+</div>
+
+<!-- ========== STAGE 4 ========== -->
+<div class="stage st4">
+  <div class="stage-header">
+    <span class="stage-badge">STAGE 4</span>
+    <span class="stage-title">専門職データ市場に参入</span>
+    <span class="stage-period">12〜24ヶ月目</span>
+  </div>
+
+  <p style="font-size: 14px; color: var(--text2); margin-bottom: 16px;">
+    ここからが本番。大工・職人・調理師など専門家のデータを集め始める。<br>
+    日常動作の実績と信頼が、専門家を口説く武器になる。
+  </p>
+
+  <div class="detail-grid">
+    <div class="detail-card">
+      <h4>ターゲットとする専門職</h4>
+      <ul>
+        <li><strong>大工・建設作業員</strong> — 木材加工、釘打ち、測定</li>
+        <li><strong>電気工事士</strong> — 配線、はんだ付け</li>
+        <li><strong>溶接工</strong> — 溶接技術の動作パターン</li>
+        <li><strong>板前・シェフ</strong> — プロの包丁技術</li>
+        <li><strong>理学療法士</strong> — リハビリ指導の動作</li>
+        <li><strong>介護士</strong> — 高齢者のケア動作</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>専門家を集める方法</h4>
+      <ul>
+        <li>職人系YouTuber・TikTokerに営業</li>
+        <li>職業訓練校・専門学校と提携</li>
+        <li>業界団体（建設業協会等）への提案</li>
+        <li>「副業で月5万円」のアピール</li>
+        <li>紹介報酬プログラム（既存→新規）</li>
+        <li>地方自治体の産業振興との連携</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-grid" style="margin-top: 16px;">
+    <div class="detail-card">
+      <h4>プラットフォーム強化</h4>
+      <ul>
+        <li>モバイルアプリ開発（iOS/Android）</li>
+        <li>マルチアングル撮影ガイド機能</li>
+        <li>AI品質スコアリング自動化</li>
+        <li>Story Protocol連携（IP管理）</li>
+        <li>サブスクリプションプラン導入</li>
+        <li>API提供（AI企業向け直接アクセス）</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>資金調達</h4>
+      <ul>
+        <li>シード資金: $300K〜500K</li>
+        <li>ピッチ先: AI特化VC、Web3ファンド</li>
+        <li>実績: Stage 1-3の売上データが武器</li>
+        <li>エンジニア2〜3名を採用</li>
+        <li>営業1名（専門職リクルーター）</li>
+        <li>オフィス: 不要（リモート運営）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-box"><div class="val btc">$300〜500K</div><div class="lbl">資金調達</div></div>
+    <div class="metric-box"><div class="val">500+人</div><div class="lbl">コントリビューター</div></div>
+    <div class="metric-box"><div class="val green">$50〜200K</div><div class="lbl">月間収益</div></div>
+    <div class="metric-box"><div class="val">10+社</div><div class="lbl">法人契約</div></div>
+  </div>
+
+  <div class="unlock">
+    <span class="arrow">→</span>
+    <span class="text"><strong>Stage 5への条件:</strong> 月$100K+収益 & 専門職データの安定供給体制</span>
+  </div>
+</div>
+
+<!-- TRANSITION -->
+<div class="transition">
+  <div class="icon">⬇</div>
+  <div class="condition">月$100K+ & 専門職体制確立で次へ</div>
+</div>
+
+<!-- ========== STAGE 5 ========== -->
+<div class="stage st5">
+  <div class="stage-header">
+    <span class="stage-badge">STAGE 5</span>
+    <span class="stage-title">医療データ参入 & 企業提携</span>
+    <span class="stage-period">24〜36ヶ月目</span>
+  </div>
+
+  <p style="font-size: 14px; color: var(--text2); margin-bottom: 16px;">
+    最高価値のデータ領域。医療機関との正式提携により、<br>
+    手術映像・リハビリデータなど$500〜2,000+/時の高価値データを取り扱う。
+  </p>
+
+  <div class="detail-grid">
+    <div class="detail-card">
+      <h4>医療データの種類</h4>
+      <ul>
+        <li><strong>手術映像</strong> — 腹腔鏡手術、内視鏡手術</li>
+        <li><strong>リハビリ動作</strong> — 理学療法の施術映像</li>
+        <li><strong>介護動作</strong> — 入浴介助、移乗介助</li>
+        <li><strong>歯科治療</strong> — インプラント、矯正</li>
+        <li><strong>看護技術</strong> — 採血、点滴、包帯法</li>
+        <li><strong>救急処置</strong> — BLS、外傷処置</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>必要な提携先</h4>
+      <ul>
+        <li>大学病院（研究利用の枠組み）</li>
+        <li>医療法人（手術映像の提供）</li>
+        <li>介護施設チェーン</li>
+        <li>医療機器メーカー（ロボット手術）</li>
+        <li>認定匿名加工医療情報作成事業者</li>
+        <li>医療系弁護士事務所</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-grid" style="margin-top: 16px;">
+    <div class="detail-card">
+      <h4>法規制対応</h4>
+      <ul>
+        <li>次世代医療基盤法に基づく認定取得</li>
+        <li>匿名加工医療情報作成事業者の認定</li>
+        <li>倫理審査委員会（IRB）の設置</li>
+        <li>患者同意取得の仕組み構築</li>
+        <li>HIPAA準拠（海外展開用）</li>
+        <li>GDPR準拠（欧州展開用）</li>
+      </ul>
+    </div>
+    <div class="detail-card">
+      <h4>グローバル展開</h4>
+      <ul>
+        <li>アジア展開（韓国・台湾・シンガポール）</li>
+        <li>シリーズA資金調達: $3〜5M</li>
+        <li>チーム: 15〜30名</li>
+        <li>海外のロボット企業との直接契約</li>
+        <li>データの多国籍性が競争力に</li>
+        <li>IPO or M&Aの検討開始</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-box"><div class="val gold">$3〜5M</div><div class="lbl">シリーズA</div></div>
+    <div class="metric-box"><div class="val">5,000+人</div><div class="lbl">コントリビューター</div></div>
+    <div class="metric-box"><div class="val green">$500K+</div><div class="lbl">月間収益</div></div>
+    <div class="metric-box"><div class="val gold">$500〜2K/h</div><div class="lbl">医療データ単価</div></div>
+  </div>
+</div>
+
+<!-- ===== LEGAL REQUIREMENTS BY STAGE ===== -->
+<h2 style="font-size: 22px; font-weight: 900; margin: 48px 0 8px; background: linear-gradient(135deg, var(--text), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+  段階別の法的要件
+</h2>
+<p style="font-size: 14px; color: var(--text2); margin-bottom: 24px;">早すぎる法務コストは避ける。各ステージで必要な分だけ対応。</p>
+
+<div class="legal-grid">
+  <div class="legal-card">
+    <div class="icon">📋</div>
+    <h4>個人情報保護法</h4>
+    <p>撮影者の同意取得、プライバシーポリシー策定。映像内の顔・個人情報の匿名化処理。</p>
+    <span class="stage-tag s3">STAGE 3〜</span>
+  </div>
+  <div class="legal-card">
+    <div class="icon">💱</div>
+    <h4>暗号資産規制</h4>
+    <p>BTCの「送金」は交換業に該当しない設計。ただし税務申告のガイダンスは提供必要。</p>
+    <span class="stage-tag s3">STAGE 3〜</span>
+  </div>
+  <div class="legal-card">
+    <div class="icon">🏢</div>
+    <h4>法人設立</h4>
+    <p>合同会社で十分（費用¥6万）。VCからの調達時に株式会社への組織変更を検討。</p>
+    <span class="stage-tag s3">STAGE 3〜</span>
+  </div>
+  <div class="legal-card">
+    <div class="icon">🏥</div>
+    <h4>次世代医療基盤法</h4>
+    <p>匿名加工医療情報作成事業者の認定。2024年改正法で仮名加工にも対応。</p>
+    <span class="stage-tag s5">STAGE 5</span>
+  </div>
+  <div class="legal-card">
+    <div class="icon">🌍</div>
+    <h4>GDPR / HIPAA</h4>
+    <p>海外展開時に準拠が必要。EU向けはGDPR、米国医療データはHIPAA。</p>
+    <span class="stage-tag s5">STAGE 5</span>
+  </div>
+  <div class="legal-card">
+    <div class="icon">⛓️</div>
+    <h4>IPライセンス管理</h4>
+    <p>Story Protocol連携でデータの所有権・使用権をオンチェーン管理。自動ロイヤリティ分配。</p>
+    <span class="stage-tag s4">STAGE 4〜</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY TABLE ===== -->
+<h2 style="font-size: 22px; font-weight: 900; margin: 48px 0 8px; background: linear-gradient(135deg, var(--text), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+  全体サマリー
+</h2>
+
+<table class="summary-table">
+  <thead>
+    <tr>
+      <th>段階</th>
+      <th>期間</th>
+      <th>初期費用</th>
+      <th>月間収益</th>
+      <th>人数</th>
+      <th>キーアクション</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="color: var(--text2);">Stage 1</td>
+      <td>0〜3ヶ月</td>
+      <td>¥0</td>
+      <td style="color: var(--green);">$50〜100</td>
+      <td>1人</td>
+      <td>既存PFで日常動作を売る</td>
+    </tr>
+    <tr>
+      <td style="color: var(--blue);">Stage 2</td>
+      <td>3〜6ヶ月</td>
+      <td>¥0</td>
+      <td style="color: var(--green);">$500〜2K</td>
+      <td>5〜20人</td>
+      <td>仲間集め・データ量拡大</td>
+    </tr>
+    <tr>
+      <td style="color: var(--purple);">Stage 3</td>
+      <td>6〜12ヶ月</td>
+      <td>¥30〜50万</td>
+      <td style="color: var(--green);">$5K〜20K</td>
+      <td>50〜100人</td>
+      <td>自前PF構築・法人契約</td>
+    </tr>
+    <tr>
+      <td style="color: var(--btc);">Stage 4</td>
+      <td>12〜24ヶ月</td>
+      <td>$300〜500K</td>
+      <td style="color: var(--green);">$50K〜200K</td>
+      <td>500+人</td>
+      <td>専門職データ・資金調達</td>
+    </tr>
+    <tr>
+      <td style="color: var(--gold);">Stage 5</td>
+      <td>24〜36ヶ月</td>
+      <td>$3〜5M</td>
+      <td style="color: var(--green);">$500K+</td>
+      <td>5,000+人</td>
+      <td>医療参入・グローバル展開</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="msg">今日の1本の動画が、3年後の$500K/月企業の第一歩。</div>
+  <div class="sub">まずはiPhoneで料理動画を1本撮影することから始めよう。</div>
+</div>
+
+</body>
+</html>

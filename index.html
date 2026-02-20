@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAC - Ugoki AI Center</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a1a;--surface:#12122a;--surface2:#1a1a3a;--accent:#6c5ce7;--accent2:#a29bfe;--gold:#f0b429;--btc:#f7931a;--green:#00e676;--text:#e8e8f0;--text2:#9090b0;--border:#2a2a4a}
+body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* Lock Screen */
+#lockScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#lockScreen::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(108,92,231,0.12) 0%,transparent 50%),radial-gradient(ellipse at 70% 50%,rgba(247,147,26,0.08) 0%,transparent 50%);animation:pulse 8s ease-in-out infinite alternate}
+@keyframes pulse{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.1);opacity:1}}
+.lock-box{position:relative;z-index:1;text-align:center;padding:40px}
+.lock-logo{font-size:64px;font-weight:900;letter-spacing:-2px;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.lock-sub{font-size:14px;color:var(--text2);letter-spacing:6px;text-transform:uppercase;margin-bottom:40px}
+.lock-box input{width:280px;padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;text-align:center;outline:none;transition:border-color 0.3s}
+.lock-box input:focus{border-color:var(--accent)}
+.lock-box input::placeholder{color:var(--text2);opacity:0.5}
+.lock-box button{display:block;width:280px;margin:16px auto 0;padding:14px;background:linear-gradient(135deg,var(--accent),#5a4bd1);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.lock-box button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,92,231,0.3)}
+#err{font-size:13px;color:var(--btc);margin-top:12px;opacity:0;transition:opacity 0.3s}
+#err.show{opacity:1}
+
+/* Main Content */
+#mainContent{display:none}
+.nav-header{text-align:center;padding:60px 24px 40px;background:linear-gradient(180deg,rgba(108,92,231,0.08) 0%,transparent 100%)}
+.nav-logo{font-size:48px;font-weight:900;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-sub{font-size:13px;color:var(--text2);letter-spacing:4px;margin-top:4px}
+.nav-desc{font-size:16px;color:var(--text2);margin-top:16px;max-width:500px;margin-left:auto;margin-right:auto}
+
+.card-grid{max-width:700px;margin:48px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px 24px;text-align:center;text-decoration:none;color:var(--text);transition:transform 0.2s,border-color 0.3s,box-shadow 0.3s;cursor:pointer;display:block}
+.card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 32px rgba(108,92,231,0.15)}
+.card .icon{font-size:40px;margin-bottom:12px}
+.card .title{font-size:18px;font-weight:700;margin-bottom:8px}
+.card .desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+.footer{text-align:center;padding:48px 24px;font-size:12px;color:var(--text2);opacity:0.4}
+
+@media(max-width:600px){
+  .card-grid{grid-template-columns:1fr}
+  .lock-logo{font-size:48px}
+}
+</style>
+</head>
+<body>
+
+<!-- Lock Screen -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <div class="lock-logo">UAC</div>
+    <div class="lock-sub">Ugoki AI Center</div>
+    <form id="lockForm">
+      <input type="password" id="pw" placeholder="Password" autocomplete="off">
+      <button type="submit">Enter</button>
+    </form>
+    <div id="err">パスワードが違います</div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div id="mainContent">
+  <div class="nav-header">
+    <div class="nav-logo">UAC</div>
+    <div class="nav-sub">Ugoki AI Center</div>
+    <div class="nav-desc">NEXUS - AIデータマーケットプレイス<br>人間のスキルをAIの燃料に。報酬はビットコインで。</div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card" href="pitch.html">
+      <div class="icon">📊</div>
+      <div class="title">ビジネス資料</div>
+      <div class="desc">投資家向けピッチデック<br>問題・解決策・市場規模・収益モデル</div>
+    </a>
+    <a class="card" href="roadmap.html">
+      <div class="icon">🚀</div>
+      <div class="title">グロース戦略</div>
+      <div class="desc">5段階グロースロードマップ<br>個人→企業へのスケールアップ</div>
+    </a>
+  </div>
+
+  <div class="footer">CONFIDENTIAL - UAC / NEXUS AI Data Marketplace</div>
+</div>
+
+<script>
+var S=[127,107,105,24,26,24,28,24,24,27],X=42;
+function ck(p){if(p.length!==S.length)return false;for(var i=0;i<S.length;i++){if((p.charCodeAt(i)^X)!==S[i])return false}return true}
+document.getElementById("lockForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var p=document.getElementById("pw").value;
+  if(ck(p)){document.getElementById("lockScreen").style.display="none";document.getElementById("mainContent").style.display="block"}
+  else{document.getElementById("err").classList.add("show");document.getElementById("pw").value="";document.getElementById("pw").focus()}
+});
+</script>
+</body>
+</html>
