@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>NEXUS - 現実的事業計画 | 名古屋・愛知県</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a1a;--surface:#12122a;--surface2:#1a1a3a;--accent:#6c5ce7;--accent2:#a29bfe;--gold:#f0b429;--btc:#f7931a;--green:#00e676;--red:#ff5252;--text:#e8e8f0;--text2:#9090b0;--border:#2a2a4a;--blue:#4fc3f7;--purple:#ce93d8;--orange:#ffb74d}
+body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding-top:56px}
+
+/* ===== TOP NAV ===== */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:99999;background:#0a0a1a;border-bottom:1px solid var(--border);display:flex;height:56px}
+.top-nav a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-size:14px;font-weight:700;transition:all 0.2s}
+.top-nav a.active{background:linear-gradient(135deg,var(--accent),#5a4bd1);color:#fff}
+.top-nav a:not(.active){color:var(--text2);background:var(--surface)}
+.top-nav a:not(.active):hover{color:var(--text);background:var(--surface2)}
+
+/* ===== HEADER ===== */
+.header{text-align:center;padding:60px 24px 40px;background:linear-gradient(180deg,rgba(108,92,231,0.08) 0%,transparent 100%)}
+.header .logo{font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header h1{font-size:26px;font-weight:700;margin:12px 0 8px}
+.header p{font-size:14px;color:var(--text2);max-width:600px;margin:0 auto}
+
+.content{max-width:900px;margin:0 auto;padding:0 24px}
+
+/* ===== SECTION ===== */
+.sec{margin-bottom:48px}
+.sec-num{font-size:11px;color:var(--accent2);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;margin-top:48px}
+.sec-title{font-size:24px;font-weight:900;margin-bottom:24px;background:linear-gradient(135deg,var(--text),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sec-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 auto}
+
+/* ===== COMPETITOR CARDS ===== */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.comp-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative;overflow:hidden}
+.comp-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.comp-card.zeno::before{background:var(--blue)}
+.comp-card.scale::before{background:var(--green)}
+.comp-card.asimov::before{background:var(--purple)}
+.comp-card.cortex::before{background:var(--orange)}
+.comp-card .name{font-size:18px;font-weight:900;margin-bottom:4px}
+.comp-card .tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.comp-card.zeno .tag{background:rgba(79,195,247,0.2);color:var(--blue)}
+.comp-card.scale .tag{background:rgba(0,230,118,0.2);color:var(--green)}
+.comp-card.asimov .tag{background:rgba(206,147,216,0.2);color:var(--purple)}
+.comp-card.cortex .tag{background:rgba(255,183,77,0.2);color:var(--orange)}
+.comp-card ul{list-style:none;font-size:13px;color:var(--text2)}
+.comp-card ul li{padding:3px 0;padding-left:16px;position:relative}
+.comp-card ul li::before{content:'▸';position:absolute;left:0;color:var(--accent2)}
+.comp-card .stat{margin-top:12px;font-size:13px;font-weight:700}
+.comp-card .stat span{color:var(--gold)}
+
+/* ===== INFO BOX ===== */
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0}
+.info-box h4{font-size:15px;font-weight:700;color:var(--accent2);margin-bottom:12px}
+.info-box p,.info-box li{font-size:13px;color:var(--text2);line-height:1.8}
+.info-box ul{list-style:none;padding:0}
+.info-box ul li{padding:4px 0;padding-left:16px;position:relative}
+.info-box ul li::before{content:'▸';position:absolute;left:0;color:var(--accent2)}
+
+/* ===== ADVANTAGE GRID ===== */
+.adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.adv-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
+.adv-card .icon{font-size:28px;margin-bottom:8px}
+.adv-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.adv-card p{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* ===== STEP CARDS ===== */
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin:16px 0;position:relative;overflow:hidden}
+.step-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.step-badge{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(108,92,231,0.2);color:var(--accent2)}
+.step-title{font-size:18px;font-weight:900}
+.step-period{font-size:12px;color:var(--text2);margin-left:auto}
+.step-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.step-detail{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px}
+.step-detail h5{font-size:12px;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.step-detail ul{list-style:none;font-size:13px;color:var(--text2)}
+.step-detail ul li{padding:3px 0;padding-left:14px;position:relative}
+.step-detail ul li::before{content:'▸';position:absolute;left:0;color:var(--accent2)}
+.step-cost{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.cost-box{flex:1;min-width:100px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.cost-box .val{font-size:18px;font-weight:900;color:var(--gold)}
+.cost-box .lbl{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* ===== SUBSIDY TABLE ===== */
+.sub-table{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0;font-size:13px}
+.sub-table thead th{background:var(--surface2);padding:12px 14px;font-size:11px;font-weight:600;color:var(--accent2);text-align:left;border-bottom:1px solid var(--border);letter-spacing:1px}
+.sub-table thead th:first-child{border-radius:12px 0 0 0}
+.sub-table thead th:last-child{border-radius:0 12px 0 0}
+.sub-table tbody td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text2)}
+.sub-table tbody tr:hover{background:rgba(108,92,231,0.05)}
+.sub-table .amount{color:var(--green);font-weight:700}
+
+/* ===== BP FLOW ===== */
+.bp-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.bp-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.bp-item .num{font-size:24px;font-weight:900;color:var(--accent2);margin-bottom:4px}
+.bp-item .title{font-size:13px;font-weight:700;margin-bottom:6px}
+.bp-item .desc{font-size:11px;color:var(--text2);line-height:1.5}
+
+/* ===== TIMELINE ===== */
+.timeline{position:relative;padding-left:40px;margin:32px 0}
+.timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--btc),var(--green))}
+.tl-item{position:relative;margin-bottom:24px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.tl-item::before{content:'';position:absolute;left:-33px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}
+.tl-item .month{font-size:11px;color:var(--accent2);letter-spacing:2px;font-weight:700}
+.tl-item .action{font-size:14px;font-weight:700;margin:4px 0}
+.tl-item .detail{font-size:12px;color:var(--text2)}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:48px 24px 32px}
+.footer .msg{font-size:18px;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer .sub{font-size:12px;color:var(--text2)}
+
+@media(max-width:700px){
+  .comp-grid,.adv-grid,.step-grid{grid-template-columns:1fr}
+  .bp-flow{grid-template-columns:1fr 1fr}
+  .header h1{font-size:20px}
+  .sec-title{font-size:20px}
+  .top-nav a{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <a href="pitch.html">📊 ビジネス資料</a>
+  <a href="roadmap.html">🚀 グロース戦略</a>
+  <a class="active" href="plan.html">📋 事業計画</a>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">NEXUS</div>
+  <h1>現実的事業計画書<br>〜名古屋・愛知県から始める〜</h1>
+  <p>競合分析・地域の強み・具体的な準備ステップ・助成金活用まで、現実的に事業を立ち上げるための計画</p>
+</div>
+
+<div class="content">
+
+<!-- ===== 1. 競合分析 ===== -->
+<div class="sec">
+  <div class="sec-num">01 — 競合分析（2026年最新）</div>
+  <div class="sec-title">知っておくべきプレイヤーたち</div>
+
+  <p style="font-size:14px;color:var(--text2);margin-bottom:20px;">
+    フィジカルAI向けデータ市場は2026年に急激に立ち上がっている。主要プレイヤーの動向を正確に把握し、差別化ポイントを明確にする。
+  </p>
+
+  <div class="comp-grid">
+    <div class="comp-card zeno">
+      <div class="name">ZenO</div>
+      <div class="tag">最大の競合</div>
+      <ul>
+        <li>2026年2月にパブリックベータをローンチ</li>
+        <li>Story Protocol（L1ブロックチェーン）と統合</li>
+        <li>NVIDIA Inceptionプログラムに参加</li>
+        <li>スマートグラス型の専用ハードウェアを展開</li>
+        <li>報酬はステーブルコインで支払い</li>
+        <li>汎用的なフィジカルAIデータに焦点</li>
+      </ul>
+      <div class="stat">累計調達: <span>$136M</span></div>
+    </div>
+    <div class="comp-card scale">
+      <div class="name">Scale AI</div>
+      <div class="tag">大手・間接競合</div>
+      <ul>
+        <li>2026年売上目標 約$2B（前年比130%成長）</li>
+        <li>Meta が49%の非議決権株式を$14.3Bで取得</li>
+        <li>評価額$29B</li>
+        <li>テキスト/画像のラベリングが主力</li>
+        <li>フィジカルAIデータには未参入</li>
+        <li>米国防総省と$249M契約</li>
+      </ul>
+      <div class="stat">評価額: <span>$29B</span></div>
+    </div>
+    <div class="comp-card asimov">
+      <div class="name">Asimov</div>
+      <div class="tag">YC W26・直接競合</div>
+      <ul>
+        <li>Y Combinator 2026年冬バッチ</li>
+        <li>Stanford/Berkeley中退の創業者チーム</li>
+        <li>アジアで世界最大のモーションデータ収集</li>
+        <li>5,000+の住宅・工場にハードウェア設置</li>
+        <li>専用ハードウェアを自社設計・製造</li>
+        <li>匿名化・アノテーションパイプライン構築済み</li>
+      </ul>
+      <div class="stat">注目度: <span>YC選出</span></div>
+    </div>
+    <div class="comp-card cortex">
+      <div class="name">Cortex AI</div>
+      <div class="tag">YC F25・職場特化</div>
+      <ul>
+        <li>Y Combinator 2025年秋バッチ</li>
+        <li>職場（工場・倉庫）のロボットデータに特化</li>
+        <li>Cortex Marketplace で職場がデータ提供</li>
+        <li>ロボット軌道 + 人間のエゴセントリックデータ</li>
+        <li>Carousell元CTO（$1.1B企業）が創業</li>
+        <li>リモートオペレーターによるデータ収集</li>
+      </ul>
+      <div class="stat">焦点: <span>産業用</span></div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h4>🎯 NEXUSの差別化ポイント</h4>
+    <ul>
+      <li><strong>日本市場 × 専門職データ</strong> — 競合は全て米国拠点。日本の職人技・医療データは未開拓</li>
+      <li><strong>BTC報酬</strong> — ZenOはステーブルコイン、他はUSD。BTCは長期的な価値保存の訴求力あり</li>
+      <li><strong>愛知県の製造業ネットワーク</strong> — トヨタを中心とする世界最大級の製造業集積地からデータ収集</li>
+      <li><strong>ハードウェア不要</strong> — ZenOやAsimovは専用デバイスが必要。NEXUSはスマホだけで開始可能</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 2. なぜ名古屋・愛知県か ===== -->
+<div class="sec">
+  <div class="sec-num">02 — なぜ名古屋・愛知県か</div>
+  <div class="sec-title">日本一の「ものづくり」拠点から始める理由</div>
+
+  <div class="adv-grid">
+    <div class="adv-card">
+      <div class="icon">🏭</div>
+      <h4>製造業出荷額 日本一</h4>
+      <p>愛知県は製造品出荷額等で46年連続全国1位。トヨタ、デンソー、アイシンなど世界的メーカーが集積。ロボットデータの需要元が地元にある。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">🤖</div>
+      <h4>ロボット産業の集積</h4>
+      <p>ファナック、安川電機の拠点あり。ダイドー（6,000社以上取引）など産業用ロボットSIerが多数。2026年11月には名古屋でロボデックス開催。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">🏢</div>
+      <h4>STATION Ai</h4>
+      <p>2024年10月開業の国内最大のスタートアップ支援拠点。500社以上入居、2029年に1,000社目標。メンタリング・資金調達支援・大企業マッチング。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">👨‍🔧</div>
+      <h4>職人文化の宝庫</h4>
+      <p>自動車整備士、溶接工、木工職人など、高度な技術を持つ専門家が多数。名古屋の料理文化（味噌煮込み・ひつまぶし等）も独自データに。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">💰</div>
+      <h4>充実した補助金制度</h4>
+      <p>名古屋市スタートアップ企業支援補助金、あいちスタートアップ創業支援事業費補助金など、創業期の資金面をサポートする制度が充実。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">🏠</div>
+      <h4>低い生活コスト</h4>
+      <p>東京と比べてオフィス賃料・生活費が大幅に安い。リモート運営と組み合わせれば、少ない資金で長く事業を継続できる。</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 3. 事業計画書の作り方 ===== -->
+<div class="sec">
+  <div class="sec-num">03 — 事業計画書の作り方</div>
+  <div class="sec-title">融資・補助金に通る事業計画書</div>
+
+  <p style="font-size:14px;color:var(--text2);margin-bottom:20px;">
+    日本政策金融公庫の創業融資や補助金申請に必要な事業計画書。決まったフォーマットはないが、以下の項目をカバーすれば問題ない。
+  </p>
+
+  <div class="bp-flow">
+    <div class="bp-item">
+      <div class="num">1</div>
+      <div class="title">事業概要</div>
+      <div class="desc">何をやるのか<br>誰の課題を解決するか</div>
+    </div>
+    <div class="bp-item">
+      <div class="num">2</div>
+      <div class="title">市場分析</div>
+      <div class="desc">市場規模・競合<br>差別化ポイント</div>
+    </div>
+    <div class="bp-item">
+      <div class="num">3</div>
+      <div class="title">収益計画</div>
+      <div class="desc">売上予測・費用<br>損益分岐点</div>
+    </div>
+    <div class="bp-item">
+      <div class="num">4</div>
+      <div class="title">資金計画</div>
+      <div class="desc">必要資金・調達方法<br>使途の内訳</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h4>📝 作成ツール（無料）</h4>
+    <ul>
+      <li><strong>日本政策金融公庫</strong> — 創業計画書テンプレート（Excel）を公式サイトからダウンロード</li>
+      <li><strong>マネーフォワード クラウド会社設立</strong> — 業種別テンプレート（Word/Excel/PPTX）</li>
+      <li><strong>ドリームゲート</strong> — 8万人が利用する事業計画書作成ツール（ブラウザ上で作成）</li>
+      <li><strong>freee会社設立</strong> — 合同会社設立の書類を自動作成 + 事業計画テンプレート</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <h4>💡 NEXUS向け事業計画書のポイント</h4>
+    <ul>
+      <li><strong>「AI訓練データ市場$250B+」</strong>という巨大な市場機会を冒頭で示す</li>
+      <li><strong>ZenOの$136M調達</strong>を引用し、市場が立ち上がっている証拠とする</li>
+      <li><strong>Stage 1は費用ゼロ</strong>で始められることを強調（リスクの低さ）</li>
+      <li><strong>愛知県の製造業ネットワーク</strong>が競争優位になることを説明</li>
+      <li><strong>段階的な成長計画</strong>を示し、いきなり大きな投資をしないことを示す</li>
+      <li><strong>法的リスク</strong>（暗号資産規制・個人情報保護法）への対応策を明記</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 4. 会社設立の手順 ===== -->
+<div class="sec">
+  <div class="sec-num">04 — 準備会社の設立</div>
+  <div class="sec-title">合同会社設立 → 株式会社への道</div>
+
+  <p style="font-size:14px;color:var(--text2);margin-bottom:20px;">
+    まずは合同会社（LLC）で低コスト設立。VC調達が必要になるStage 4で株式会社に組織変更する。
+  </p>
+
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 1</span>
+      <span class="step-title">合同会社を設立する</span>
+    </div>
+    <div class="step-grid">
+      <div class="step-detail">
+        <h5>必要なもの</h5>
+        <ul>
+          <li>会社名の決定（例: NEXUS合同会社）</li>
+          <li>本店所在地（自宅でOK）</li>
+          <li>資本金（1円から可能、10万円程度推奨）</li>
+          <li>定款の作成</li>
+          <li>代表社員の印鑑</li>
+          <li>個人の印鑑証明書</li>
+        </ul>
+      </div>
+      <div class="step-detail">
+        <h5>手順</h5>
+        <ul>
+          <li>① 定款を作成（freeeで自動作成可能）</li>
+          <li>② 資本金を払い込み</li>
+          <li>③ 法務局で設立登記申請</li>
+          <li>④ 税務署・県税事務所に届出</li>
+          <li>⑤ 銀行口座を開設</li>
+          <li>⑥ 社会保険の手続き（従業員なしなら不要）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="step-cost">
+      <div class="cost-box"><div class="val">¥60,000</div><div class="lbl">登録免許税</div></div>
+      <div class="cost-box"><div class="val">¥0</div><div class="lbl">定款認証（不要）</div></div>
+      <div class="cost-box"><div class="val">¥5,000</div><div class="lbl">印鑑代</div></div>
+      <div class="cost-box"><div class="val">約¥7万</div><div class="lbl">合計</div></div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 2</span>
+      <span class="step-title">事業に必要なアカウント・環境</span>
+    </div>
+    <div class="step-grid">
+      <div class="step-detail">
+        <h5>ビジネスインフラ</h5>
+        <ul>
+          <li>法人銀行口座（GMOあおぞら / 住信SBI）</li>
+          <li>会計ソフト（freee / マネーフォワード）</li>
+          <li>法人クレカ（三井住友 for Owners等）</li>
+          <li>ドメイン取得 + メールアドレス</li>
+          <li>法人用Googleアカウント</li>
+        </ul>
+      </div>
+      <div class="step-detail">
+        <h5>技術インフラ</h5>
+        <ul>
+          <li>GitHub Organization（コード管理）</li>
+          <li>Vercel or Cloudflare Pages（ホスティング）</li>
+          <li>Supabase（DB + 認証）</li>
+          <li>Cloudflare R2（データストレージ）</li>
+          <li>BTCPay Server（BTC決済・OSS無料）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 5. 補助金・助成金 ===== -->
+<div class="sec">
+  <div class="sec-num">05 — 活用できる補助金・助成金</div>
+  <div class="sec-title">名古屋・愛知県の創業支援制度</div>
+
+  <table class="sub-table">
+    <thead>
+      <tr>
+        <th>制度名</th>
+        <th>補助額</th>
+        <th>対象</th>
+        <th>ポイント</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;color:var(--text)">名古屋市スタートアップ<br>企業支援補助金</td>
+        <td class="amount">最大100万円</td>
+        <td>創業5年以内の<br>名古屋市内企業</td>
+        <td>創業時の経費一部を助成。毎年4〜5月に募集。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--text)">あいちスタートアップ<br>創業支援事業費補助金</td>
+        <td class="amount">最大200万円</td>
+        <td>愛知県内で新技術を<br>活用した起業者</td>
+        <td>起業経費 + 伴走支援付き。地域課題解決が条件。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--text)">小規模事業者<br>持続化補助金</td>
+        <td class="amount">最大50〜200万円</td>
+        <td>小規模事業者</td>
+        <td>販路開拓経費（Web制作・広告等）に利用可能。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--text)">日本政策金融公庫<br>新創業融資</td>
+        <td class="amount">最大3,000万円<br>（融資）</td>
+        <td>新たに事業を<br>始める方</td>
+        <td>無担保・無保証人。事業計画書が最重要。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--text)">STATION Ai<br>入居・支援プログラム</td>
+        <td class="amount">各種支援</td>
+        <td>入居スタートアップ</td>
+        <td>メンタリング、投資家紹介、大企業マッチング。500社以上入居中。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <h4>📌 補助金申請のコツ</h4>
+    <ul>
+      <li><strong>「地域課題の解決」</strong>をストーリーに入れる — 愛知の製造業のデジタル化支援という角度</li>
+      <li><strong>事業計画書の完成度</strong>が採択率を左右する — 市場データと段階的計画を丁寧に記述</li>
+      <li><strong>募集時期を逃さない</strong> — 名古屋市は例年4〜5月、愛知県は6月頃が締切</li>
+      <li><strong>複数に同時申請</strong>可能 — 名古屋市 + 愛知県 + 小規模事業者補助金は併用検討</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 6. 最初の6ヶ月 具体的アクション ===== -->
+<div class="sec">
+  <div class="sec-num">06 — 最初の6ヶ月</div>
+  <div class="sec-title">名古屋で今すぐやること</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="month">MONTH 1</div>
+      <div class="action">調査 & アカウント開設</div>
+      <div class="detail">ZenO・Versos.ai・CrowdGenに登録。自分で日常動作（料理・掃除等）を撮影しアップロード。どのカテゴリが売れるかテスト開始。</div>
+    </div>
+    <div class="tl-item">
+      <div class="month">MONTH 2</div>
+      <div class="action">データの反応を分析 & 撮影量拡大</div>
+      <div class="detail">売れたカテゴリを特定。撮影の質を向上（照明・アングル・解像度）。名古屋めしの料理動画など地域色のあるデータも試す。</div>
+    </div>
+    <div class="tl-item">
+      <div class="month">MONTH 3</div>
+      <div class="action">合同会社設立 & 補助金申請準備</div>
+      <div class="detail">freeeで合同会社設立手続き。事業計画書のドラフト作成。名古屋市・愛知県の補助金の募集要項を確認。STATION Aiの見学・入居検討。</div>
+    </div>
+    <div class="tl-item">
+      <div class="month">MONTH 4</div>
+      <div class="action">仲間集め & 補助金申請</div>
+      <div class="detail">友人・知人に撮影を依頼。SNSでコントリビューター募集。名古屋市スタートアップ補助金・あいち創業支援補助金に申請。</div>
+    </div>
+    <div class="tl-item">
+      <div class="month">MONTH 5</div>
+      <div class="action">データ量拡大 & AI企業リサーチ</div>
+      <div class="detail">コントリビューター5〜10人に拡大。撮影マニュアル作成。AI企業・ロボット企業へのアプローチリスト作成。愛知県内のロボット企業にもコンタクト。</div>
+    </div>
+    <div class="tl-item">
+      <div class="month">MONTH 6</div>
+      <div class="action">初期収益の確立 & 次のステップ判断</div>
+      <div class="detail">月$50〜100の安定収益を目指す。データの品質・需要を分析。Stage 3（自前プラットフォーム構築）に進むかどうかを判断。</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 7. リスクと対策 ===== -->
+<div class="sec">
+  <div class="sec-num">07 — リスクと現実的な対策</div>
+  <div class="sec-title">見落としてはいけないこと</div>
+
+  <div class="adv-grid">
+    <div class="adv-card">
+      <div class="icon">⚠️</div>
+      <h4>既存プラットフォームに依存</h4>
+      <p>Stage 1-2はZenO等に依存。規約変更やサービス停止のリスクあり。→ 早期に自前プラットフォーム構築を目指す。複数PFに分散。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">⚠️</div>
+      <h4>競合の資金力</h4>
+      <p>ZenOは$136M、Asimovは5,000+拠点。資金で勝負しない。→ 日本市場特化・専門職ニッチで差別化。大手が来ない領域を攻める。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">⚠️</div>
+      <h4>暗号資産の規制</h4>
+      <p>BTC送金は「交換業」に該当する可能性。→ Stage 1-2はUSD/JPYで報酬支払い。BTC導入はStage 3以降、法的整理後に。</p>
+    </div>
+    <div class="adv-card">
+      <div class="icon">⚠️</div>
+      <h4>データの売れ行き不透明</h4>
+      <p>実際にデータが売れるかは不確実。→ Stage 1で費用ゼロで検証。売れなければピボット。まず市場の反応を見る。</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="msg">まず1本の動画を撮ることから、全てが始まる。</div>
+  <div class="sub">CONFIDENTIAL - UAC / NEXUS AI Data Marketplace</div>
+</div>
+
+</body>
+</html>
