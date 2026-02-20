@@ -669,9 +669,44 @@ body {
     flex-direction: column;
   }
 }
+/* ===== TOP NAV ===== */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  background: rgba(10,10,26,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 20px;
+}
+.top-nav a {
+  text-decoration: none; font-size: 13px; font-weight: 600;
+  padding: 8px 18px; border-radius: 10px; transition: all 0.2s;
+}
+.top-nav a.active {
+  background: linear-gradient(135deg, var(--accent), #5a4bd1);
+  color: #fff;
+}
+.top-nav a:not(.active) {
+  color: var(--text2); border: 1px solid var(--border);
+}
+.top-nav a:not(.active):hover {
+  color: var(--text); border-color: var(--accent);
+}
+.top-nav .nav-home {
+  position: absolute; left: 16px; font-size: 18px; text-decoration: none;
+  color: var(--text2); transition: color 0.2s;
+}
+.top-nav .nav-home:hover { color: var(--accent2); }
+body { padding-top: 52px; }
 </style>
 </head>
 <body>
+
+<!-- ===== TOP NAV ===== -->
+<div class="top-nav">
+  <a class="nav-home" href="index.html">🏠</a>
+  <a class="active" href="pitch.html">📊 ビジネス資料</a>
+  <a href="roadmap.html">🚀 グロース戦略</a>
+</div>
 
 <!-- ===== COVER ===== -->
 <div class="cover">
