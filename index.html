@@ -97,7 +97,7 @@ function ck(p){if(p.length!==S.length)return false;for(var i=0;i<S.length;i++){i
 document.getElementById("lockForm").addEventListener("submit",function(e){
   e.preventDefault();
   var p=document.getElementById("pw").value;
-  if(ck(p)){document.getElementById("lockScreen").style.display="none";document.getElementById("mainContent").style.display="flex"}
+  if(ck(p)){window.location.href="pitch.html"}
   else{document.getElementById("err").classList.add("show");document.getElementById("pw").value="";document.getElementById("pw").focus()}
 });
 </script>
