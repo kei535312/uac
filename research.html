@@ -326,13 +326,13 @@ body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);co
   <div class="hole">
     <div class="title">🕳️ 穴 2: ZenOに「載せてもらう」だけでは差別化できない</div>
     <div class="problem">Stage 1-2は既存プラットフォームに依存。ZenOが日本展開したら、NEXUSの存在意義がなくなる。プラットフォーム側の規約変更で突然使えなくなるリスクも。</div>
-    <div class="solution"><strong>対策:</strong> Stage 1は「市場検証」と割り切る。<strong>できるだけ早くStage 3（自前プラットフォーム）に移行</strong>する。6ヶ月以内が目標。ZenOにはないもの（日本語UI・BTC報酬・専門職ネットワーク）を武器にする。</div>
+    <div class="solution"><strong>対策:</strong> Stage 1は「市場検証」と割り切る。<strong>できるだけ早くStage 3（自前プラットフォーム）に移行</strong>する。6ヶ月以内が目標。ZenOにはないもの（日本語UI・即時日本円報酬・専門職ネットワーク）を武器にする。</div>
   </div>
 
   <div class="hole">
-    <div class="title">🕳️ 穴 3: BTC報酬は日本では法的リスクがある</div>
-    <div class="problem">BTC/暗号資産を「報酬として送金」すると、暗号資産交換業の登録が必要になる可能性がある（金融庁）。無登録での営業は犯罪。</div>
-    <div class="solution"><strong>対策:</strong> Stage 1-3は<strong>日本円で報酬支払い</strong>（銀行振込）。BTCオプションはStage 4以降、弁護士と相談の上で導入。ピッチ資料の「報酬はビットコインで」は将来ビジョンとして位置づけ直す。</div>
+    <div class="title">🕳️ 穴 3: 決済・送金の法的整備が必要</div>
+    <div class="problem">報酬を即時に多数のコントリビューターに支払う仕組みが必要。資金決済法や資金移動業の登録が必要になる可能性。</div>
+    <div class="solution"><strong>対策:</strong> <strong>Stripe Connect等の決済代行サービス</strong>を活用し、自社で資金を扱わない設計にする。報酬は日本円で銀行振込。法的リスクを最小化。</div>
   </div>
 
   <div class="hole">
@@ -369,7 +369,7 @@ body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);co
 <div class="analysis">
   <h4>🔄 当初プランからの主な修正点</h4>
   <ul>
-    <li><span class="bad">✕ BTC報酬を最初から導入</span> → <span class="good">○ 最初は日本円。BTC はStage 4以降</span></li>
+    <li><span class="bad">✕ 暗号資産で報酬支払い</span> → <span class="good">○ 日本円（銀行振込）/ USD（Stripe）で即時支払い</span></li>
     <li><span class="bad">✕ 市場規模$250B+</span> → <span class="good">○ AI訓練データ市場$7〜16B（2030年）</span></li>
     <li><span class="bad">✕ 日常動作で稼ぐ</span> → <span class="good">○ 日常動作は入口。できるだけ早く専門職に移行</span></li>
     <li><span class="bad">✕ 医療データにすぐ参入</span> → <span class="good">○ 最初の2年は非医療専門職（職人・介護動作）に集中</span></li>
@@ -385,7 +385,119 @@ body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);co
     <li><span class="highlight">条件2:</span> 専門職データ（職人技・介護動作）で汎用データの5倍以上の単価を実現する</li>
     <li><span class="highlight">条件3:</span> 6ヶ月以内にAI企業1社と直接のデータ取引（少額でもOK）を実現する</li>
     <li><span class="highlight">条件4:</span> STATION Aiまたは愛知県のスタートアップ支援を活用して、技術共同創業者を見つける</li>
-    <li><span class="highlight">条件5:</span> BTC報酬の法的整理を専門弁護士に相談し、合法的なスキームを確立する</li>
+    <li><span class="highlight">条件5:</span> Stripe Connect等を活用した決済フローを構築し、法的リスクを回避する</li>
+  </ul>
+</div>
+
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 8. プラットフォーム脅威 ===== -->
+<div class="sec-num">08 — 巨大プラットフォームの脅威</div>
+<div class="sec-title">YouTube・TikTok・Redditはすでにデータを売っている</div>
+
+<div class="verdict warn">
+  <div class="icon">🚨</div>
+  <div class="label gold">最大の脅威：プラットフォームが直接AI企業にデータを売る構図</div>
+  <div class="desc">YouTube・TikTok・Redditなどの巨大プラットフォームは、すでにユーザーの投稿データをAI企業に提供・販売している。NEXUSが「日常動作データ」で戦うのは、この巨人と戦うことを意味する。</div>
+</div>
+
+<div class="fact-grid">
+  <div class="fact-card">
+    <div class="num red">$203M+</div>
+    <div class="metric">RedditのAIデータライセンス収益（累計）</div>
+    <div class="source">Google $60M/年 + OpenAI $70M + 他</div>
+  </div>
+  <div class="fact-card">
+    <div class="num gold">数十億本</div>
+    <div class="metric">YouTube・TikTokの動画数</div>
+    <div class="source">日常動作データは無限にある</div>
+  </div>
+  <div class="fact-card">
+    <div class="num accent">利用規約</div>
+    <div class="metric">全プラットフォームがAI訓練の権利を確保済み</div>
+    <div class="source">TikTok・Meta・YouTube</div>
+  </div>
+  <div class="fact-card">
+    <div class="num green">未整備</div>
+    <div class="metric">動画はAI訓練用に構造化されていない</div>
+    <div class="source">NEXUSのチャンスはここ</div>
+  </div>
+</div>
+
+<div class="analysis">
+  <h4>📺 各プラットフォームの現状</h4>
+  <ul>
+    <li><span class="highlight">Reddit</span> — Google（$60M/年）、OpenAI（$70M）とライセンス契約。テキストデータ。「動的価格設定」で次の契約を交渉中</li>
+    <li><span class="highlight">YouTube / Google</span> — 自社AI（Gemini）の訓練にYouTube動画を使用。2025年に「第三者にAI訓練を許可する」設定を新設。クリエイターの許可制。</li>
+    <li><span class="highlight">Meta（Instagram / Facebook）</span> — ユーザーの公開投稿（テキスト・画像）で自社AI（Llama等）を訓練。EU以外ではオプトアウト不可。ハリウッドにもAIライセンス提案</li>
+    <li><span class="highlight">TikTok</span> — 利用規約で「機械学習モデルの訓練のためにコンテンツを使用する権利」を自社に付与。米国ではOracle管理のJVに移行</li>
+    <li><span class="highlight">Spotify</span> — 2026年2月に自社AIの訓練データの出典を公開せず問題に。音声データの無断使用疑惑</li>
+  </ul>
+</div>
+
+<div class="analysis">
+  <h4>⚖️ 法的にどうなっているか？</h4>
+  <ul>
+    <li><span class="good">合法</span>: プラットフォームが<span class="highlight">自社の利用規約内で</span>ユーザーデータをAI訓練に使うこと — ほぼ全てのプラットフォームが規約でカバー済み</li>
+    <li><span class="good">合法</span>: プラットフォームが<span class="highlight">ライセンス契約で</span>AI企業にデータを販売すること — Redditモデルが先例</li>
+    <li><span class="bad">違法/係争中</span>: <span class="highlight">無断スクレイピング</span>でデータを収集すること — NVIDIA・OpenAIがクリエイターから訴訟を受けている</li>
+    <li><span class="warn">グレー</span>: 「公開データ」のメタデータ収集 — 法域により判断が分かれる</li>
+  </ul>
+</div>
+
+<div class="analysis">
+  <h4>💡 NEXUSへの意味：なぜそれでもチャンスがあるか</h4>
+  <ul>
+    <li><span class="bad">❌ 日常動作データ</span> — YouTube/TikTokに数十億本ある。価格競争では勝てない。<span class="highlight">ここで戦ってはいけない</span></li>
+    <li><span class="good">✅ AI訓練に最適化されたデータ</span> — YouTubeの動画はバラバラの角度・照明・解像度。NEXUSは<span class="highlight">AI訓練用に構造化・アノテーション済み</span>のデータを提供</li>
+    <li><span class="good">✅ プラットフォームに上がらないデータ</span> — 手術映像・職人技・介護動作はYouTubeにない。<span class="highlight">専門職データはNEXUSだけが取れる</span></li>
+    <li><span class="good">✅ データの権利が明確</span> — YouTubeのデータは権利関係が曖昧で訴訟リスクあり。NEXUSは<span class="highlight">撮影者と明確な契約</span>を結ぶ</li>
+  </ul>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 9. 特許の可能性 ===== -->
+<div class="sec-num">09 — 特許取得の可能性</div>
+<div class="sec-title">日本でビジネスモデル特許は取れるか？</div>
+
+<div class="verdict warn">
+  <div class="icon">📋</div>
+  <div class="label gold">「ビジネスモデル」だけでは取れない。技術的工夫が必要。</div>
+  <div class="desc">日本の特許法では、ビジネスのアイデア自体は特許にならない。ただし、そのアイデアをICT（情報通信技術）で実現する「技術的な仕組み」には特許が認められる。</div>
+</div>
+
+<div class="analysis">
+  <h4>📌 日本のビジネスモデル特許の要件</h4>
+  <ul>
+    <li><span class="highlight">大原則:</span> 「AIデータマーケットプレイス」というビジネスアイデア自体は特許にならない</li>
+    <li><span class="highlight">特許になるもの:</span> そのアイデアを実現する<span class="good">「技術的な仕組み（システム・方法）」</span></li>
+    <li><span class="highlight">特許庁の審査基準:</span> ①新規性（世の中に同じものがない）②進歩性（既存技術から容易に思いつかない）③ICTの利用</li>
+    <li><span class="highlight">近年の傾向:</span> ビジネス関連発明の<span class="good">特許査定率は約70%台</span>に達しており、以前より取りやすくなっている</li>
+  </ul>
+</div>
+
+<div class="analysis">
+  <h4>💡 NEXUSで特許が取れそうな「技術的な仕組み」</h4>
+  <ul>
+    <li><span class="good">候補1:</span> <span class="highlight">AI品質検証システム</span> — 撮影された動作データの品質（角度・解像度・動作の明瞭さ）をAIが自動スコアリングする仕組み</li>
+    <li><span class="good">候補2:</span> <span class="highlight">専門職データのマッチングアルゴリズム</span> — AI企業の需要とコントリビューターのスキルデータを自動マッチングする方法</li>
+    <li><span class="good">候補3:</span> <span class="highlight">動画データの自動匿名化処理</span> — 撮影された動画から個人情報（顔・名札等）をリアルタイムで匿名化する技術</li>
+    <li><span class="good">候補4:</span> <span class="highlight">撮影ガイドシステム</span> — AI訓練に最適なデータになるよう撮影者にリアルタイムでガイド表示する仕組み</li>
+    <li><span class="warn">候補5:</span> <span class="highlight">データライセンス管理システム</span> — 同一データの複数企業への再販・利用状況をトラッキングし自動で報酬分配する仕組み</li>
+  </ul>
+</div>
+
+<div class="analysis">
+  <h4>📝 特許申請の現実的なステップ</h4>
+  <ul>
+    <li><span class="highlight">費用:</span> 出願時 約¥15,000（印紙代）+ 弁理士費用 ¥30〜50万/件。審査請求 ¥138,000+。合計 <span class="warn">¥50〜80万/件</span></li>
+    <li><span class="highlight">期間:</span> 出願から登録まで <span class="warn">約1〜2年</span>（早期審査で6ヶ月も可能）</li>
+    <li><span class="highlight">タイミング:</span> <span class="good">Stage 3（自前プラットフォーム構築時）</span>に出願するのが最適。技術的な仕組みが具体化した時点で</li>
+    <li><span class="highlight">注意:</span> 出願前に技術内容を公開すると新規性を失う。<span class="bad">GitHubでソースコードを公開する前に出願</span>する必要がある</li>
+    <li><span class="highlight">推奨:</span> まずは<span class="good">弁理士に無料相談</span>（名古屋には知財の無料相談窓口あり。INPIT愛知県知財総合支援窓口）</li>
   </ul>
 </div>
 
