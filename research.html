@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>NEXUS - 実現可能性調査レポート</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a1a;--surface:#12122a;--surface2:#1a1a3a;--accent:#6c5ce7;--accent2:#a29bfe;--gold:#f0b429;--btc:#f7931a;--green:#00e676;--red:#ff5252;--text:#e8e8f0;--text2:#9090b0;--border:#2a2a4a;--blue:#4fc3f7;--purple:#ce93d8;--orange:#ffb74d}
+body{font-family:'Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding-top:56px}
+
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:99999;background:#0a0a1a;border-bottom:1px solid var(--border);display:flex;height:56px}
+.top-nav a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-size:13px;font-weight:700;transition:all 0.2s}
+.top-nav a.active{background:linear-gradient(135deg,var(--accent),#5a4bd1);color:#fff}
+.top-nav a:not(.active){color:var(--text2);background:var(--surface)}
+.top-nav a:not(.active):hover{color:var(--text);background:var(--surface2)}
+
+.header{text-align:center;padding:60px 24px 40px;background:linear-gradient(180deg,rgba(108,92,231,0.08) 0%,transparent 100%)}
+.header .logo{font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header h1{font-size:24px;font-weight:700;margin:12px 0 8px}
+.header p{font-size:14px;color:var(--text2);max-width:600px;margin:0 auto}
+
+.content{max-width:900px;margin:0 auto;padding:0 24px 60px}
+.sec-num{font-size:11px;color:var(--accent2);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;margin-top:48px}
+.sec-title{font-size:24px;font-weight:900;margin-bottom:20px;background:linear-gradient(135deg,var(--text),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sec-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 auto}
+
+/* VERDICT */
+.verdict{background:var(--surface);border:2px solid var(--green);border-radius:20px;padding:32px;margin:24px 0;text-align:center}
+.verdict.warn{border-color:var(--gold)}
+.verdict.danger{border-color:var(--red)}
+.verdict .icon{font-size:48px;margin-bottom:12px}
+.verdict .label{font-size:20px;font-weight:900;margin-bottom:8px}
+.verdict .label.green{color:var(--green)}
+.verdict .label.gold{color:var(--gold)}
+.verdict .label.red{color:var(--red)}
+.verdict .desc{font-size:14px;color:var(--text2);line-height:1.8;max-width:600px;margin:0 auto}
+
+/* FACT CARDS */
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.fact-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+.fact-card .num{font-size:28px;font-weight:900;margin-bottom:4px}
+.fact-card .num.green{color:var(--green)}
+.fact-card .num.gold{color:var(--gold)}
+.fact-card .num.red{color:var(--red)}
+.fact-card .num.accent{color:var(--accent2)}
+.fact-card .num.btc{color:var(--btc)}
+.fact-card .metric{font-size:13px;color:var(--text2);margin-bottom:8px}
+.fact-card .source{font-size:11px;color:var(--text2);opacity:0.5}
+
+/* ANALYSIS BOX */
+.analysis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0}
+.analysis h4{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.analysis p,.analysis li{font-size:13px;color:var(--text2);line-height:1.9}
+.analysis ul{list-style:none;padding:0}
+.analysis ul li{padding:4px 0;padding-left:18px;position:relative}
+.analysis ul li::before{content:'▸';position:absolute;left:0;color:var(--accent2)}
+.analysis .highlight{color:var(--text);font-weight:700}
+.analysis .good{color:var(--green)}
+.analysis .warn{color:var(--gold)}
+.analysis .bad{color:var(--red)}
+
+/* ROADMAP */
+.rm{position:relative;padding-left:40px;margin:32px 0}
+.rm::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--red),var(--gold),var(--green))}
+.rm-item{position:relative;margin-bottom:20px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.rm-item::before{content:'';position:absolute;left:-33px;top:24px;width:10px;height:10px;border-radius:50%;border:3px solid var(--bg)}
+.rm-item.hard::before{background:var(--red)}
+.rm-item.mid::before{background:var(--gold)}
+.rm-item.easy::before{background:var(--green)}
+.rm-item .phase{font-size:11px;letter-spacing:2px;font-weight:700;margin-bottom:4px}
+.rm-item .phase.r{color:var(--red)}
+.rm-item .phase.y{color:var(--gold)}
+.rm-item .phase.g{color:var(--green)}
+.rm-item h4{font-size:16px;font-weight:900;margin-bottom:6px}
+.rm-item p{font-size:13px;color:var(--text2);line-height:1.7}
+.rm-item .time{display:inline-block;margin-top:8px;padding:3px 10px;background:var(--surface2);border-radius:20px;font-size:11px;color:var(--text2)}
+
+/* HOLE CARD */
+.hole-grid{display:grid;grid-template-columns:1fr;gap:16px;margin:24px 0}
+.hole{background:var(--surface);border-left:4px solid var(--red);border-radius:0 14px 14px 0;padding:24px}
+.hole .title{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.hole .problem{font-size:13px;color:var(--red);margin-bottom:8px;font-weight:600}
+.hole .solution{font-size:13px;color:var(--text2);line-height:1.8}
+.hole .solution strong{color:var(--green)}
+
+.footer{text-align:center;padding:48px 24px 32px}
+.footer .msg{font-size:16px;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,var(--accent2),var(--btc));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer .sub{font-size:12px;color:var(--text2)}
+
+@media(max-width:700px){
+  .fact-grid{grid-template-columns:1fr}
+  .header h1{font-size:20px}
+  .sec-title{font-size:20px}
+  .top-nav a{font-size:10px;gap:3px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <a href="pitch.html">📊 ビジネス資料</a>
+  <a href="roadmap.html">🚀 グロース戦略</a>
+  <a href="plan.html">📋 事業計画</a>
+  <a class="active" href="research.html">🔍 実現可能性</a>
+</div>
+
+<div class="header">
+  <div class="logo">NEXUS</div>
+  <h1>実現可能性調査レポート</h1>
+  <p>このビジネスは本当に成り立つのか？需要・競合・法規制・穴を徹底的に検証する</p>
+</div>
+
+<div class="content">
+
+<!-- ===== 1. 総合判定 ===== -->
+<div class="sec-num">01 — 総合判定</div>
+<div class="sec-title">結論から言う</div>
+
+<div class="verdict">
+  <div class="icon">⚠️</div>
+  <div class="label gold">条件付きで実現可能</div>
+  <div class="desc">
+    AI訓練データ市場の需要は確実に存在し、急成長している。<br>
+    ただし「日常動作データを個人が売って稼ぐ」というモデルには<strong>重大な構造的課題</strong>がある。<br>
+    成功するには、当初のピッチ資料から<strong>戦略を修正する必要がある</strong>。
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 2. 市場の需要：本物か？ ===== -->
+<div class="sec-num">02 — 市場の需要</div>
+<div class="sec-title">AIデータ市場は本物か？</div>
+
+<div class="verdict">
+  <div class="icon">✅</div>
+  <div class="label green">需要は本物。急成長中。</div>
+  <div class="desc">AI訓練データ市場は2025年時点で$3.2〜7.5B規模。2034年には$23〜68Bに成長予測。特にフィジカルAI（ロボット）向けデータは「テキストの次のフロンティア」として争奪戦。</div>
+</div>
+
+<div class="fact-grid">
+  <div class="fact-card">
+    <div class="num green">$3.6B</div>
+    <div class="metric">AI訓練データ市場規模（2025年）</div>
+    <div class="source">Fortune Business Insights</div>
+  </div>
+  <div class="fact-card">
+    <div class="num green">$23〜68B</div>
+    <div class="metric">2034-35年予測（調査機関により幅あり）</div>
+    <div class="source">Fortune BI / Market Research Future</div>
+  </div>
+  <div class="fact-card">
+    <div class="num gold">CAGR 20〜29%</div>
+    <div class="metric">年間成長率</div>
+    <div class="source">Grand View Research / Straits Research</div>
+  </div>
+  <div class="fact-card">
+    <div class="num btc">$2.26B</div>
+    <div class="metric">2026年Q1だけでのロボティクスVC投資額</div>
+    <div class="source">CB Insights</div>
+  </div>
+</div>
+
+<div class="analysis">
+  <h4>📊 ファクトチェック：ピッチ資料の「$250B+」について</h4>
+  <p>当初のピッチ資料で「AI訓練データ市場 $250B+（2030年予測）」としていたが、<span class="warn">これは過大</span>。調査機関のコンセンサスでは2030年時点で<span class="highlight">$7〜16B程度</span>が妥当。$250Bは「AI市場全体」の数字と混同している可能性がある。</p>
+  <p style="margin-top:8px;"><span class="good">→ 修正推奨:</span> ピッチ資料の市場規模を「$7〜16B（2030年）」「$23〜68B（2034-35年）」に修正。それでも巨大な市場。</p>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 3. AIが人を雇う構図 ===== -->
+<div class="sec-num">03 — AIが人を雇う構図</div>
+<div class="sec-title">「AIが人間にデータ収集を委託する」はどこまで普及しているか？</div>
+
+<div class="verdict">
+  <div class="icon">✅</div>
+  <div class="label green">すでに巨大産業として確立</div>
+  <div class="desc">AIが人間にデータ収集・ラベリングを委託する構図は、2026年時点で完全に定着している。数百万人のギグワーカーがこのエコシステムに参加。</div>
+</div>
+
+<div class="analysis">
+  <h4>🌍 現在の「AIが人を雇う」エコシステム</h4>
+  <ul>
+    <li><span class="highlight">Scale AI（Remotasks）</span> — 世界最大のデータラベリングプラットフォーム。評価額$29B。数十万人のワーカーが登録。汎用ラベリングの時給は$7〜15</li>
+    <li><span class="highlight">Surge AI（DataAnnotation）</span> — RLHF特化。約50,000人の審査済みワーカー。専門家（法律・医学）は時給$40+</li>
+    <li><span class="highlight">Outlier（Scale AI子会社）</span> — 汎用$15/h、物理学専門家は$30〜50/h</li>
+    <li><span class="highlight">Appen / CrowdGen</span> — 130万人以上のワーカー。多言語データ収集に強み</li>
+    <li><span class="highlight">ZenO</span> — 2026年2月パブリックベータ開始。フィジカルAIデータに特化。ステーブルコインで報酬</li>
+    <li><span class="highlight">Asimov</span> — YC W26。5,000+拠点にハードウェア設置。人間のモーションデータ収集</li>
+  </ul>
+</div>
+
+<div class="analysis">
+  <h4>💰 実際のワーカー報酬（2026年現在）</h4>
+  <ul>
+    <li>汎用データラベリング（テキスト・画像タグ付け）: <span class="warn">時給 $7〜15</span>（低単価のギグワーク）</li>
+    <li>RLHF（AIの回答を評価する仕事）: <span class="highlight">時給 $15〜25</span></li>
+    <li>専門分野（法律・医学・物理学）: <span class="good">時給 $30〜50+</span></li>
+    <li>米国の平均データラベリング年収: <span class="highlight">$50,981</span>（≒ 時給$24.51）</li>
+    <li>途上国のフルタイムワーカー: <span class="warn">月$500〜1,000</span></li>
+  </ul>
+  <p style="margin-top:12px;"><span class="bad">⚠️ 重要な気づき:</span> 汎用データは低単価の「ギグワーク」。<span class="highlight">専門家データだけが高単価</span>を維持できる。NEXUSの「専門職データ」戦略は正しい方向。</p>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 4. フィジカルAIデータの需要 ===== -->
+<div class="sec-num">04 — フィジカルAI特化の需要</div>
+<div class="sec-title">ロボット向け「人間の動作データ」は本当に必要か？</div>
+
+<div class="verdict">
+  <div class="icon">✅</div>
+  <div class="label green">最もホットな領域。ボトルネックはデータ。</div>
+  <div class="desc">Deloitte、MIT、NVIDIAが一致して「フィジカルAIの最大の課題はリアルワールドの訓練データ不足」と指摘。データが最大のボトルネック。</div>
+</div>
+
+<div class="fact-grid">
+  <div class="fact-card">
+    <div class="num gold">$39.5B</div>
+    <div class="metric">Figure AI 評価額（2026年）</div>
+    <div class="source">ヒューマノイドロボット最大手</div>
+  </div>
+  <div class="fact-card">
+    <div class="num accent">270,000時間</div>
+    <div class="metric">Generalist AI のロボットデータ蓄積量</div>
+    <div class="source">週10,000時間ずつ増加中</div>
+  </div>
+  <div class="fact-card">
+    <div class="num btc">$40,000+</div>
+    <div class="metric">テレオペ用ロボット1台のコスト</div>
+    <div class="source">従来の方法は高コスト</div>
+  </div>
+  <div class="fact-card">
+    <div class="num green">1/10コスト</div>
+    <div class="metric">人間のデモンストレーション収集の方が安い</div>
+    <div class="source">テレオペ比での新手法</div>
+  </div>
+</div>
+
+<div class="analysis">
+  <h4>🤖 ロボット企業はデータをどう集めているか？</h4>
+  <ul>
+    <li><span class="highlight">テレオペレーション</span> — ロボットを遠隔操作して動作データを記録。1台$40,000+。1日数百回のデモ。コスト高。</li>
+    <li><span class="highlight">シミュレーション</span> — 仮想環境で大量データ生成。MITが研究。ただし現実世界とのギャップ（sim-to-real gap）が課題。</li>
+    <li><span class="highlight">人間のデモンストレーション動画</span> — 最も安価で多様なデータ。NEXUSはここを狙う。<span class="good">コスト優位性あり</span>。</li>
+    <li><span class="highlight">NVIDIA</span> — 2026年にオープンフィジカルAIデータセットを公開。需要の大きさを証明。</li>
+  </ul>
+  <p style="margin-top:12px;"><span class="good">✅ 結論:</span> 人間の動作を動画で撮影してAI訓練に使うアプローチは、テレオペより安く・多様なデータが取れるため、需要は確実にある。</p>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 5. 医療データへのロードマップ ===== -->
+<div class="sec-num">05 — 医療データ取得のロードマップ</div>
+<div class="sec-title">高価値な医療データを取り扱えるようになるまで</div>
+
+<div class="verdict warn">
+  <div class="icon">⚠️</div>
+  <div class="label gold">実現可能だが、最低2〜3年かかる</div>
+  <div class="desc">日本の医療データは次世代医療基盤法で規制されている。認定事業者になるには厳格な審査があり、スタートアップが最初から手を出す領域ではない。段階的なアプローチが必須。</div>
+</div>
+
+<div class="rm">
+  <div class="rm-item easy">
+    <div class="phase g">LEVEL 1 — すぐ始められる</div>
+    <h4>非医療の「健康関連」データ</h4>
+    <p>ストレッチ、ヨガ、筋トレなどの運動動画。介護予防体操。これらは医療データに該当しないため、個人の同意のみで収集・販売可能。</p>
+    <div class="time">0〜6ヶ月目</div>
+  </div>
+  <div class="rm-item easy">
+    <div class="phase g">LEVEL 2 — 資格者との連携</div>
+    <h4>理学療法士・柔道整復師のリハビリ動作</h4>
+    <p>個人の資格者が自分の施術動作を撮影。患者は映さない。「施術者の手技データ」として収集。個人情報保護法の範囲内で対応可能。</p>
+    <div class="time">6〜12ヶ月目</div>
+  </div>
+  <div class="rm-item mid">
+    <div class="phase y">LEVEL 3 — 法人契約が必要</div>
+    <h4>介護施設との提携（介護動作データ）</h4>
+    <p>入浴介助・移乗介助などの介護技術データ。利用者の顔は映さず、介護職員の動作のみを記録。施設との法人契約・利用者の同意が必要。倫理委員会の承認推奨。</p>
+    <div class="time">12〜18ヶ月目</div>
+  </div>
+  <div class="rm-item mid">
+    <div class="phase y">LEVEL 4 — 大学・研究機関との連携</div>
+    <h4>研究利用枠での医療動作データ</h4>
+    <p>大学の研究プロジェクトとして、看護技術（包帯法・採血シミュレーション等）のデータを収集。IRB（倫理審査委員会）の承認を取得。シミュレーター上のデータなら患者データに該当しない。</p>
+    <div class="time">18〜24ヶ月目</div>
+  </div>
+  <div class="rm-item hard">
+    <div class="phase r">LEVEL 5 — 最高難度</div>
+    <h4>実際の手術映像・臨床データ</h4>
+    <p>次世代医療基盤法に基づく「認定匿名加工医療情報作成事業者」の認定が必要。個人情報保護委員会と厚生労働省の審査。専任の個人情報保護責任者・セキュリティ体制が必須。現実的にはStage 5（24〜36ヶ月後）以降。</p>
+    <div class="time">24〜36ヶ月目</div>
+  </div>
+</div>
+
+<div class="analysis">
+  <h4>📋 次世代医療基盤法の壁</h4>
+  <ul>
+    <li><span class="highlight">認定匿名加工医療情報作成事業者</span>の認定には、厳格なセキュリティ体制・個人情報保護体制が必要</li>
+    <li><span class="highlight">仮名加工医療情報</span>は2024年改正で新設。提供先が「国が認定した利活用者」に限定される</li>
+    <li><span class="highlight">再識別の禁止</span>・<span class="highlight">第三者提供の禁止</span>など、データの転売に厳しい制約</li>
+    <li><span class="warn">⚠️ 現実的な判断:</span> 医療データの「販売」はそのままでは違法になりうる。「研究目的での匿名加工データ提供」という形にする必要がある</li>
+  </ul>
+  <p style="margin-top:12px;"><span class="good">→ 推奨:</span> 医療データは最終目標として据えつつ、<span class="highlight">最初の2年は非医療の専門職データ（職人・介護・料理）に集中</span>する。</p>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 6. ビジネスモデルの穴 ===== -->
+<div class="sec-num">06 — ビジネスモデルの穴</div>
+<div class="sec-title">正直に指摘する：このプランの弱点</div>
+
+<div class="hole-grid">
+  <div class="hole">
+    <div class="title">🕳️ 穴 1: 日常動作データの単価が低すぎる</div>
+    <div class="problem">ピッチ資料では日常動作（掃除・料理）を$20〜80/時間で売れるとしているが、ZenOのベータ版でもまだ収益実績が公開されていない。既存プラットフォーム（Remotasks等）では汎用データは時給$7〜15の世界。</div>
+    <div class="solution"><strong>対策:</strong> Stage 1で実際に売ってみて、リアルな単価を検証する。もし$10/時間以下なら、日常動作はマーケティング用（コントリビューター獲得のための入口）と割り切り、早期に専門職データにシフトする。</div>
+  </div>
+
+  <div class="hole">
+    <div class="title">🕳️ 穴 2: ZenOに「載せてもらう」だけでは差別化できない</div>
+    <div class="problem">Stage 1-2は既存プラットフォームに依存。ZenOが日本展開したら、NEXUSの存在意義がなくなる。プラットフォーム側の規約変更で突然使えなくなるリスクも。</div>
+    <div class="solution"><strong>対策:</strong> Stage 1は「市場検証」と割り切る。<strong>できるだけ早くStage 3（自前プラットフォーム）に移行</strong>する。6ヶ月以内が目標。ZenOにはないもの（日本語UI・BTC報酬・専門職ネットワーク）を武器にする。</div>
+  </div>
+
+  <div class="hole">
+    <div class="title">🕳️ 穴 3: BTC報酬は日本では法的リスクがある</div>
+    <div class="problem">BTC/暗号資産を「報酬として送金」すると、暗号資産交換業の登録が必要になる可能性がある（金融庁）。無登録での営業は犯罪。</div>
+    <div class="solution"><strong>対策:</strong> Stage 1-3は<strong>日本円で報酬支払い</strong>（銀行振込）。BTCオプションはStage 4以降、弁護士と相談の上で導入。ピッチ資料の「報酬はビットコインで」は将来ビジョンとして位置づけ直す。</div>
+  </div>
+
+  <div class="hole">
+    <div class="title">🕳️ 穴 4: 買い手（AI企業）へのアクセスがない</div>
+    <div class="problem">データを集めても買い手がいなければ売れない。Figure AI、Googleなどの大企業に無名のスタートアップがアプローチするのは現実的に困難。</div>
+    <div class="solution"><strong>対策:</strong> ①愛知県の製造業企業（トヨタ系列のロボット部門等）から攻める。②STATION Aiの大企業マッチングを活用。③ YC出身のAsimovやCortex AIに「日本のデータパートナー」として提携を持ちかける。④ ロボティクス系カンファレンス（ロボデックス等）で直接営業。</div>
+  </div>
+
+  <div class="hole">
+    <div class="title">🕳️ 穴 5: 一人で全部やるのは無理</div>
+    <div class="problem">プラットフォーム開発・営業・コントリビューター管理・法務・会計…Stage 3以降は一人では回らない。しかし資金がない段階で人を雇えない。</div>
+    <div class="solution"><strong>対策:</strong> ① Stage 1-2は一人でOK。③ Stage 3でエンジニア1人を共同創業者として巻き込む（STATION Aiで出会う）。④ 補助金（名古屋市100万円 + 愛知県200万円 = 最大300万円）を人件費に充てる。</div>
+  </div>
+
+  <div class="hole">
+    <div class="title">🕳️ 穴 6: 市場規模を過大に見積もっている</div>
+    <div class="problem">ピッチ資料の$250B+は「AI市場全体」の数字。AI訓練データ市場は2030年時点で$7〜16B程度。投資家にこの数字を出すと信頼を失う。</div>
+    <div class="solution"><strong>対策:</strong> ピッチ資料を修正。「AI訓練データ市場 $7〜16B（2030年）」「フィジカルAI市場は$38B（2035年）」など、出典付きの正確な数字を使う。</div>
+  </div>
+
+  <div class="hole">
+    <div class="title">🕳️ 穴 7: データの品質管理が曖昧</div>
+    <div class="problem">スマホで撮影した動画がAI訓練に使える品質かどうかの基準がない。角度、照明、解像度、アノテーション（ラベル付け）のフォーマットが未定義。</div>
+    <div class="solution"><strong>対策:</strong> Stage 1で実際にZenOに出して品質フィードバックを受ける。AI企業が求める<strong>データフォーマットの仕様</strong>を正確に把握してから品質基準を策定する。</div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ===== 7. 修正版戦略 ===== -->
+<div class="sec-num">07 — 修正版戦略</div>
+<div class="sec-title">穴を踏まえた、より現実的な戦略</div>
+
+<div class="analysis">
+  <h4>🔄 当初プランからの主な修正点</h4>
+  <ul>
+    <li><span class="bad">✕ BTC報酬を最初から導入</span> → <span class="good">○ 最初は日本円。BTC はStage 4以降</span></li>
+    <li><span class="bad">✕ 市場規模$250B+</span> → <span class="good">○ AI訓練データ市場$7〜16B（2030年）</span></li>
+    <li><span class="bad">✕ 日常動作で稼ぐ</span> → <span class="good">○ 日常動作は入口。できるだけ早く専門職に移行</span></li>
+    <li><span class="bad">✕ 医療データにすぐ参入</span> → <span class="good">○ 最初の2年は非医療専門職（職人・介護動作）に集中</span></li>
+    <li><span class="bad">✕ 独自で全部やる</span> → <span class="good">○ 海外の既存プレイヤー（Asimov等）に日本パートナーとして提携</span></li>
+    <li><span class="bad">✕ グローバル展開</span> → <span class="good">○ まず愛知県の製造業ネットワークを徹底的に活用</span></li>
+  </ul>
+</div>
+
+<div class="analysis">
+  <h4>✅ このビジネスが成立する条件</h4>
+  <ul>
+    <li><span class="highlight">条件1:</span> Stage 1で「実際にデータが売れる」ことを3ヶ月以内に証明する</li>
+    <li><span class="highlight">条件2:</span> 専門職データ（職人技・介護動作）で汎用データの5倍以上の単価を実現する</li>
+    <li><span class="highlight">条件3:</span> 6ヶ月以内にAI企業1社と直接のデータ取引（少額でもOK）を実現する</li>
+    <li><span class="highlight">条件4:</span> STATION Aiまたは愛知県のスタートアップ支援を活用して、技術共同創業者を見つける</li>
+    <li><span class="highlight">条件5:</span> BTC報酬の法的整理を専門弁護士に相談し、合法的なスキームを確立する</li>
+  </ul>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="msg">正直な分析が、正しい戦略を生む。</div>
+  <div class="sub">CONFIDENTIAL - UAC / NEXUS AI Data Marketplace</div>
+</div>
+
+</body>
+</html>
